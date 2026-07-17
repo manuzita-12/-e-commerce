@@ -33,6 +33,7 @@ export class ListaProdutos {
   totalProdutos = computed(() => this.produtos().length); 
   //função que calcula o valor total dos produtos usando o metodo computed()
   valorTotal = computed(()=>
-  {return this.produtos().reduce((total, item) =>
+  {return this.produtos().reduce((total,
+     item) =>
   total + item.preco,0)});
 }
