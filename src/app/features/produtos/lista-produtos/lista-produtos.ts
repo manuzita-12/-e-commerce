@@ -25,7 +25,7 @@ export class ListaProdutos {
     console.log('Produto Selecionado: ',nome);
     this.produtoSelecionado.set(nome);
   }
-  //função que adiciona produto usando metodo update
+  //!função que adiciona produto usando metodo update
   adicionarProduto(){
     this.produtos.update(listaAtual => [
       ...listaAtual,
@@ -34,7 +34,7 @@ export class ListaProdutos {
   }
   //!função que contabiliza quantidade de itens de produtos na lista com metodo computed
   totalProdutos = computed(() => this.produtos().length); 
-  //função que calcula o valor total dos produtos usando o metodo computed()
+  //!função que calcula o valor total dos produtos usando o metodo computed()
   valorTotal = computed(()=>
   {return this.produtos().reduce((total,
      item) =>
@@ -65,4 +65,16 @@ export class ListaProdutos {
      }
      //! metodo para criar um estado de seleção com signal string | null
      produtoSelecionado = signal <string | null>(null);
+     //! metodo para criar um estado para o carrinho com signal
+     carrinho = signal <{nome: string; preco: number}[]>([]);
+     adicionarAoCarrinho(produto:{nome: string; preco: number}){
+      this.carrinho.update(listaAtual =>[...listaAtual, produto]);
+     }
+     //!totalProdutos = computed(() => this.produtos().length);
+     //!metodo para calcular a quantidade total de itens no carrinho
+     quantidadeCarrinho = computed(() => this.carrinho().length);
+     //!metodo para calcular o valor total dos itens do carrinho
+     totalCarrinho = computed (() => {
+      return this.carrinho().reduce((total, item) =>
+      total + item.preco,0)});
 }
