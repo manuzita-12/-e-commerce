@@ -1,23 +1,34 @@
-import { Routes } from '@angular/router';
-import { ListaProdutos } from './features/produtos/lista-produtos/lista-produtos';
-import { Carrinho } from './features/carrinho/carrinho/carrinho';
-import { Home } from './features/home/home/home';
+import { Routes } from "@angular/router";
+import { authGuard } from "./core/auth.guard";
 
 export const routes: Routes = [
     {
         path:'',
-        component: Home,
+        loadComponent: () =>
+            import('./features/home/home/home')
+        .then((m) => m.Home),
     },
     {
-        path: 'produtos',
-        component: ListaProdutos,
+        path:'produtos',
+        loadComponent: () =>
+            import('./features/produtos/lista-produtos/lista-produtos')
+        .then((m) => m.ListaProdutos),
     },
     {
-        path: 'carrinho',
-        component: Carrinho,
+        path:'carrinho',
+        canActivate: [authGuard],
+        loadComponent: () =>
+            import('./features/carrinho/carrinho/carrinho')
+        .then((m) => m.Carrinho),
+    },
+    {
+        path:'home',
+        loadComponent: () =>
+            import('./features/home/home/home')
+        .then((m) => m.Home),
     },
     {
         path:'**',
-        redirectTo:'',
-    }
+        redirectTo: '',
+    },
 ];
