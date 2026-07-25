@@ -5,10 +5,11 @@ import {computed} from "@angular/core"
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import {effect} from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { title } from 'process';
 import { strict } from 'assert';
 import { error } from 'console';
+import { produtosService} from '../produto/produtos.service';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -17,7 +18,8 @@ import { error } from 'console';
   styleUrl: './lista-produtos.css',
 })
 export class ListaProdutos {
-  //?======= MÉTODO SIGNALS======
+ private produtosService = inject(produtosService);
+  //!======= MÉTODO SIGNALS======
   produtos = signal<{nome: string; preco: number}[]>([]);
   carregando = signal(true);
   //?função para exibir produtos selecionados pelo usuário no console
@@ -25,7 +27,7 @@ export class ListaProdutos {
     console.log('Produto Selecionado: ',nome);
     this.produtoSelecionado.set(nome);
   }
-  //?=====MÉTODO UPDATE=====
+  //!=====MÉTODO UPDATE=====
   //?função que adiciona produto usando metodo update
   adicionarProduto(){
     this.produtos.update(listaAtual => [
@@ -33,7 +35,7 @@ export class ListaProdutos {
       {nome:'Playstation 5', preco:3000},
     ]);
   }
-  //? =====MÉTODO COMPUTED====
+  //!=====MÉTODO COMPUTED====
   //?função que contabiliza quantidade de itens de produtos na lista com metodo computed
   totalProdutos = computed(() => this.produtos().length); 
   //?função que calcula o valor total dos produtos usando o metodo computed()
@@ -49,8 +51,8 @@ export class ListaProdutos {
       return this.carrinho().reduce((total, item) =>
       total + item.preco,0
     )});
-     //? ======METODO SET======
-     //?função que substitui a lista atual usando metodo set()
+     //! ======METODO SET======
+     //!função que substitui a lista atual usando metodo set()
      substituirProdutos(){
       this.produtos.set([
         {nome:'teclado Gamer', preco:350 },
@@ -60,18 +62,14 @@ export class ListaProdutos {
         {nome:'Headset Gamer',preco: 650},
       ]);
      }
-     //?====MÉTODO HTTP CLIENT (API)======
+     //!=====MÉTODO HTTP CLIENT (API)======
      carregarProdutos(){
       this.carregando.set(true);
-      this.http.get<{title: string; price: number}[]>
-      ('https://fakestoreapi.com/products').subscribe({
+      this.produtosService.buscarProdutos().subscribe({
         next: (dados) => {
-          const produtosFormatados = dados.map(p => ({
-            nome: p.title,
-            preco: p.price,
-          }));
-          this.produtos.set(produtosFormatados);
-          this.carregando.set(false);
+          const produtos = this.produtosService.transformarProdutos(dados);
+          this.produtos.set(produtos);
+          this.carregando.set(false); 
         },
         error: (erro) => {
           console.error('Erro ao carregar produtos: ', erro);
@@ -79,9 +77,9 @@ export class ListaProdutos {
         }
       });
      }
-     //? =======CONSTRUCTOR======
-     constructor(private http: HttpClient){
-      //? Carrega a API
+     //!=======CONSTRUCTOR======
+     constructor(){
+      //!Carrega a API
       this.carregarProdutos();
       effect(() => {
         console.log('Lista de Produtos Alterados: ', this.produtos());
@@ -95,9 +93,9 @@ export class ListaProdutos {
         }
       });
      }
-     //?metodo para criar um estado de seleção com signal string | null
+     //!metodo para criar um estado de seleção com signal string | null
      produtoSelecionado = signal <string | null>(null);
-     //?metodo para criar um estado para o carrinho com signal
+     //!metodo para criar um estado para o carrinho com signal
      carrinho = signal <{nome: string; preco: number}[]>([]);
      adicionarAoCarrinho(produto:{nome: string; preco: number}){
       this.carrinho.update(listaAtual =>[...listaAtual, produto]);
