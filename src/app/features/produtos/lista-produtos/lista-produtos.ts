@@ -22,6 +22,7 @@ export class ListaProdutos {
   //!======= MÉTODO SIGNALS======
   produtos = signal<{nome: string; preco: number}[]>([]);
   carregando = signal(true);
+  erro = signal < string | null > (null);
   //?função para exibir produtos selecionados pelo usuário no console
   exibirProduto(nome: string){
     console.log('Produto Selecionado: ',nome);
@@ -64,7 +65,8 @@ export class ListaProdutos {
      }
      //!=====MÉTODO HTTP CLIENT (API)======
      carregarProdutos(){
-      this.carregando.set(true);
+      this.erro.set(null); //limpar o erro antes de fazer a requisição
+      this.carregando.set(true); //ativar o sinal de carregamento
       this.produtosService.buscarProdutos().subscribe({
         next: (dados) => {
           const produtos = this.produtosService.transformarProdutos(dados);
@@ -73,6 +75,7 @@ export class ListaProdutos {
         },
         error: (erro) => {
           console.error('Erro ao carregar produtos: ', erro);
+          this.erro.set('Erro ao carregar produtos. Por favor, tente novamente!');
           this.carregando.set(false);
         }
       });
