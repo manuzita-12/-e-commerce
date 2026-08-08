@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { CarrinhoService } from '../../../core/services/carrinho.service';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -11,5 +13,7 @@ import { RouterLink } from '@angular/router';
 })
 export class Header {
    nomeLoja = 'loja Da Manuzita';
+   private carrinhoService = inject(CarrinhoService);
+   quantidadeHeader = this.carrinhoService.quantidadeItens;
 }
    
