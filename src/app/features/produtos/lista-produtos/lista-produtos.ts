@@ -8,8 +8,9 @@ import { UpperCasePipe } from '@angular/common';
 import { title } from 'process';
 import { strict } from 'assert';
 import { error } from 'console';
-import { produtosService} from '../produto/produtos.service';
+import { produtosService} from '../../../core/services/produtos.service';
 import { inject } from '@angular/core';
+import { CarrinhoService } from '../../../core/services/carrinho.service';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -18,7 +19,7 @@ import { inject } from '@angular/core';
   styleUrl: './lista-produtos.css',
 })
 export class ListaProdutos {
- private produtosService = inject(produtosService);
+ 
   //!======= MÉTODO SIGNALS======
   produtos = signal<{nome: string; preco: number}[]>([]);
   carregando = signal(true);
@@ -44,14 +45,6 @@ export class ListaProdutos {
   {return this.produtos().reduce((total,
      item) =>
   total + item.preco,0)});
-     //?totalProdutos = computed(() => this.produtos().length);
-     //?metodo para calcular a quantidade total de itens no carrinho
-     quantidadeCarrinho = computed(() => this.carrinho().length);
-     //?metodo para calcular o valor total dos itens do carrinho
-     totalCarrinho = computed (() => {
-      return this.carrinho().reduce((total, item) =>
-      total + item.preco,0
-    )});
      //! ======METODO SET======
      //!função que substitui a lista atual usando metodo set()
      substituirProdutos(){
@@ -99,8 +92,16 @@ export class ListaProdutos {
      //!metodo para criar um estado de seleção com signal string | null
      produtoSelecionado = signal <string | null>(null);
      //!metodo para criar um estado para o carrinho com signal
-     carrinho = signal <{nome: string; preco: number}[]>([]);
+     
+
      adicionarAoCarrinho(produto:{nome: string; preco: number}){
-      this.carrinho.update(listaAtual =>[...listaAtual, produto]);
+      this.carrinhoService.adicionar(produto);
      }
+     //* ======INJECT======
+
+     private produtosService = inject(produtosService);
+     public carrinhoService = inject(CarrinhoService);
+
+     quantidadeCarrinho = this.carrinhoService.quantidadeItens;
+     totalCarrinho = this.carrinhoService.totalItens;
 }
