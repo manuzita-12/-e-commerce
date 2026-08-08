@@ -29,9 +29,9 @@
 <!-- Carrinho-->
 <hr>
 <h2>Carrinho</h2>
-@for(item of carrinho(); track $index){
+@for(item of carrinhoService.itens(); track $index){
     <p>{{ item.nome }} - {{ item.preco | precoFormatado}}</p>
 }
 <hr>
-<p><strong>Total de itens no carrinho:</strong>{{ quantidadeCarrinho()}}</p>
+<p><strong>Total de itens no carrinho:</strong>{{ carrinhoService.quantidadeItens()}}</p>
 <p><strong>Valor total do carrinho: </strong>{{totalCarrinho() |precoFormatado}}</p>
