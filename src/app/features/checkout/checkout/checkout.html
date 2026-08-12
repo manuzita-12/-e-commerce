@@ -28,7 +28,7 @@
 
     <p><input type = "text" formControlName = "endereco" placeholder = "Digite seu endereço"></p>
 
-    @if(formulario.get('endereco')?.touched && formulario.get ('email')?.errors?.['required']){
+    @if(formulario.get('endereco')?.touched && formulario.get('endereco')?.errors?.['required']){
         <small style="color: red;">ENDEREÇO É OBRIGATÓRIO</small>
         <br>
     }
