@@ -27,7 +27,7 @@ export class AuthService{
             return false;
         }
 
-        const perfil: PerfilUsuario = email === 'admin@email.com.br ' ? 'admin' : 'usuario';
+        const perfil: PerfilUsuario = email === 'admin@email.com.br' ? 'admin' : 'usuario';
         const tokenSimulado = 
            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
            'eyJzdWIiOiJhbHVub0B0ZXN0ZS5jb20iLCJwZXJmaWwiOiJ1c3VhcmlvIn0.' 
