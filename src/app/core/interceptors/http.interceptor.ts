@@ -3,7 +3,7 @@ import { tap } from "rxjs";
 import { catchError } from "rxjs";
 import { throwError } from "rxjs";
 import { inject } from "@angular/core";
-import { AuthService } from "../services/auth.service";
+import { AuthFacade } from "../facades/auth.facade";
 import { Router } from '@angular/router';
 
 export const HttpInterceptor: HttpInterceptorFn = (req, next) => {
@@ -11,9 +11,9 @@ export const HttpInterceptor: HttpInterceptorFn = (req, next) => {
     console.log('Requisição: ', req.url);
 
     //!aqui vc pode adicionar lógica para modificar a requisição
-    const authService = inject(AuthService);
+    const authFacade = inject(AuthFacade);
     const router = inject(Router);
-    const token = authService.obterToken();
+    const token = authFacade.obterToken();
     
 
     const novaReq = token ?
@@ -31,7 +31,7 @@ export const HttpInterceptor: HttpInterceptorFn = (req, next) => {
             console.error('Erro de Requisição Global:', error);
             if (error.status === 401){
                 console.error('Erro de autenticação do Usuário: ', error);
-                authService.logout();
+                authFacade.sair();
                 router.navigateByUrl('/login');
             }
             if (error.status === 500){

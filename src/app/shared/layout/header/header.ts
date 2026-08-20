@@ -1,30 +1,31 @@
 import { Component } from '@angular/core';
 import { MatToolbarModule} from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatAnchor} from '@angular/material/button';
 import { RouterLink, Router } from '@angular/router';
-import { CarrinhoService } from '../../../core/services/carrinho.service';
 import { inject } from '@angular/core';
-import { AuthService } from '../../../core/services/auth.service';
+import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
+import { AuthFacade } from '../../../core/facades/auth.facade';
+
 
 @Component({
   selector: 'app-header',
-  imports: [MatButtonModule, MatToolbarModule, RouterLink],
+  imports: [MatButtonModule, MatAnchor, MatToolbarModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
    nomeLoja = 'loja Da Manuzita';
-   private carrinhoService = inject(CarrinhoService);
-   quantidadeHeader = this.carrinhoService.quantidadeItens;
+   private carrinhoFacade = inject(CarrinhoFacade);
+   quantidadeHeader = this.carrinhoFacade.quantidadeCarrinho;
 
-   private authService = inject(AuthService);
-   usuarioLogado = this.authService.usuarioLogado;
-   usuarioAtual = this.authService.usuarioAtual;
+   private authFacade = inject(AuthFacade);
+   usuarioLogado = this.authFacade.usuarioLogado;
+   usuarioAtual = this.authFacade.usuarioAtual;
 
    private router = inject(Router);
 
    sair(){
-    this.authService.logout();
+    this.authFacade.sair();
     this.router.navigateByUrl('/login');
    }
 }
