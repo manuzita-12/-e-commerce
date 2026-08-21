@@ -95,7 +95,7 @@ export class ListaProdutos {
      //!metodo para criar um estado para o carrinho com signal
      
 
-     adicionarAoCarrinho(produto:ItemCarrinho){
+     adicionarAoCarrinho(produto: ItemCarrinho){
       this.carrinhoFacade.adicionarProdutoCarrinho(produto);
      }
      //* ======INJECT======
