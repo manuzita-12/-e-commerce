@@ -1,3 +1,4 @@
+<section class="pagina-checkout">
 <h2>Checkout</h2>
 @if(pedidoFinalizado()){
     <section class="pedido-finalizado">
@@ -24,7 +25,7 @@
         <h3>Resumo da compra</h3>
 
         <p><strong>Itens do carrinho</strong>{{carrinhoFacade.quantidadeCarrinho()}}</p>
-        <p><strong>Total: </strong>{{carrinhoFacade.totalCarrinho() | precoFormatado}}</p>
+        <p>Total: {{carrinhoFacade.totalCarrinho() | precoFormatado}}</p>
 
         <button mat-stroked-button color="primary" type="button" 
         routerLink="/carrinho">Revisar carrinho</button>
@@ -49,7 +50,6 @@
         <small style="color: red;"> NÃO PODE CONTER NÚMERO</small>
         <br>    
      }
-
     <p><input type = "email" formControlName = "email" 
         placeholder = "Digite seu E-mail"></p>
 
@@ -85,3 +85,5 @@
     </p>
 </form>
 }
+
+</section>
