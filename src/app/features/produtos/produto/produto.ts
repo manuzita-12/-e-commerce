@@ -15,17 +15,25 @@ export class Produto {
 //Entrada de dados de lista Produtos em lista-produtos
 @Input() nome: string ='';
 @Input() preco: number = 0;
+@Input() isFavorito: boolean = false;
 
 //saida de dados de Produtos selecionados para lista-produtos
 @Output() produtoSelecionado = new EventEmitter<string>();
+@Output() produtoAdicionado = new EventEmitter<ItemCarrinho>();
+@Output() produtoFavoritado = new EventEmitter<string>();
+
 selecionarProduto(){
   this.produtoSelecionado.emit(this.nome);
  }
- @Output() produtoAdicionado = new EventEmitter<ItemCarrinho>();
+
  adicionarAoCarrinho(){
   this.produtoAdicionado.emit({
 nome:this.nome,
 preco:this.preco,
   });
+ }
+ 
+ favoritarProduto() {
+  this.produtoFavoritado.emit(this.nome);
  }
 }
