@@ -10,10 +10,12 @@ import { CarrinhoFacade } from '../../../core/facades/carrinho.facade';
 import { ItemCarrinho } from '../../../core/models/item-carrinho';
 import { RouterLink } from '@angular/router';
 import { ProdutoLoja } from '../../../core/models/produto-loja';
+import { MatButtonModule } from '@angular/material/button';
+import { FavoritoService } from '../../../core/services/favoritos.service';
 
 @Component({
   selector: 'app-lista-produtos',
-  imports: [Produto, PrecoFormatadoPipe, RouterLink],
+  imports: [Produto, PrecoFormatadoPipe, RouterLink, MatButtonModule],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css',
 })
@@ -23,6 +25,7 @@ export class ListaProdutos {
   produtos = signal<ProdutoLoja[]>([]);
   carregando = signal(true);
   erro = signal < string | null > (null);
+ 
   //?função para exibir produtos selecionados pelo usuário no console
   exibirProduto(nome: string){
     console.log('Produto Selecionado: ',nome);
@@ -30,6 +33,10 @@ export class ListaProdutos {
   }
   //!=====MÉTODO UPDATE=====
   //?função que adiciona produto usando metodo update
+  adicionarAosFavoritos(nome: string) {
+  this.favoritoService.toggleFavorito(nome);
+  }
+
   adicionarProduto(){
     this.produtos.update(listaAtual => [
       ...listaAtual,
@@ -94,10 +101,11 @@ export class ListaProdutos {
       this.carrinhoFacade.adicionarProdutoCarrinho(produto);
      }
      //* ======INJECT======
-
+     private favoritoService = inject(FavoritoService);
      private produtosService = inject(produtosService);
      public carrinhoFacade = inject(CarrinhoFacade);
 
      quantidadeCarrinho = this.carrinhoFacade.quantidadeCarrinho;
      totalCarrinho = this.carrinhoFacade.totalCarrinho;
+      favoritos = this.favoritoService.favorito;
 }
