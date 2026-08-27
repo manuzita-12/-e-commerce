@@ -1,17 +1,36 @@
 mat-toolbar {
 display: flex;
 flex-wrap: wrap;
+align-items: center;
+gap: 0.5rem;
+background-color: #760079;
+color: #fff;
 }
 
-.flex-spacer {
+mat-toolbar button {
+    color: #fff;
+}
+
+mat-toolbar button:hover {
+    background-color: #fb22ff;
+}
+
+.flex-space {
     flex: 1 1 auto;
-}
-
-button {
-    margin-left: 8px;
+    color: aqua;
 }
 
 .email-usuario{
-    font-size: 16px;
-    color: blueviolet;
+    font-size: 1rem;
+    color: pink;
+}
+.barra-mangeta {
+    width: 100%;
+    height: 6.25rem;
+    background-color: var(--mat-sys-primary, #5e1f5f);
+}
+
+.nome-loja {
+    font-size: 25px;
+    font-weight: bold;
 }
