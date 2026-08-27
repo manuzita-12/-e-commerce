@@ -11,7 +11,8 @@
                     <div class="item">
                         <p><strong>{{item.nome}}</strong></p>
                         <p>{{item.preco | precoFormatado}}</p>
-                        <button mat-strocked-button color="warn" type="button" (click)="removerItem($index)">Remover</button>
+                        <button mat-raised-button color="primary" type="button" 
+                        (click)="removerItem($index)">Remover</button>
                     </div>
                 </article>
             }
