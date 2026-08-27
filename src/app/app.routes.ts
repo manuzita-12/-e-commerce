@@ -16,6 +16,12 @@ export const routes: Routes = [
         .then((m) => m.ListaProdutos),
     },
     {
+        path: 'favoritos',
+        loadComponent: () =>
+            import('./features/produtos/favoritos/favoritos')
+        .then((m) => m.Favoritos),
+    },
+    {
         path:'carrinho',
         canActivate: [authGuard],
         loadComponent: () =>
