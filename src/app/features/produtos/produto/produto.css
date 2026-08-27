@@ -8,4 +8,15 @@ mat-card {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+} 
+
+.btn-favorito {
+    min-width: 40px !important;
+    padding: 0 8px !important;
+    border-radius: 20px !important;
+}
+
+.coracao {
+    font-size: 18px;
+    line-height: 1;
 }
