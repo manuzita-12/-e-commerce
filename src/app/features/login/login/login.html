@@ -1,32 +1,32 @@
-<h2>Login</h2>
-<p>informe seus dados para autorizar a compra dos produtos</p>
-
-@if(!erroLogin()){
-    <p style="color: red;">Não foi possível realizar o Login</p>
-}
+<!-- @if(!erroLogin()){
+    <p class="erro-login">Não foi possível realizar o Login</p>
+} -->
 
 <form [formGroup]="formulario">
+  <h2>Login</h2>
+  <p>informe seus dados para autorizar a compra dos produtos</p>
+
     <p><input type="email" formControlName="email" placeholder="E-mail"></p>
 
       @if(formulario.get('email')?.touched && formulario.get('email')?.invalid){
          @if(formulario.get('email')?.errors?.['required']){
-            <small style="color: red;">ESTE CAMPO É OBRIGATÓRIO</small>
+            <small>ESTE CAMPO É OBRIGATÓRIO</small>
          }
       }
       @if(formulario.get('email')?.errors?.['email']){
-        <small style="color: red;">E-MAIL INVÁLIDO</small>
+        <small>E-MAIL INVÁLIDO</small>
       }
 
     <p><input type="password" formControlName="senha" placeholder="Senha"></p>
 
       @if(formulario.get('senha')?.touched && formulario.get('senha')?.invalid){
         @if(formulario.get('senha')?.errors?.['required']){
-        <small style="color: red;">ESTE CAMPO É OBRIGATÓRIO</small>
+        <small>ESTE CAMPO É OBRIGATÓRIO</small>
       }
     }
       @if(formulario.get('senha')?.errors?.['minlength']){
-        <small style="color: red;">DEVE CONTER NO MÍNIMO 6 CARACTERES</small>
+        <small>DEVE CONTER NO MÍNIMO 6 CARACTERES</small>
       }
 
-    <button type="button" (click)="entrar()" [disabled]="formulario.invalid">Entrar</button>
+    <button mat-raised-button type="button" (click)="entrar()" [disabled]="formulario.invalid">Entrar</button>
 </form>
