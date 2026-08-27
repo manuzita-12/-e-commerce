@@ -5,7 +5,7 @@
  <h2>Produtos</h2>
  <p>Escolha os produtos e adicione ao carrinho</p>
 </div>
-<button mat-raised-button color="primary" type="button" routerLink="/produtos">Ver Carrinho ( {{carrinhoFacade.quantidadeCarrinho()}} )</button>
+<button mat-raised-button color="primary" type="button" routerLink="/produtos"> Ver Carrinho ( {{ carrinhoFacade.quantidadeCarrinho() }} )</button>
 </header>
 
 @if(carregando()){
@@ -34,8 +34,10 @@
     <app-produto
     [nome]="item.nome"
     [preco]="item.preco"
+    [isFavorito]="favoritos().includes(item.nome)"
     (produtoSelecionado)="exibirProduto($event)"
     (produtoAdicionado)="adicionarAoCarrinho($event)"
+    (produtoFavoritado)="adicionarAosFavoritos($event)"
     >
     </app-produto>
    }
